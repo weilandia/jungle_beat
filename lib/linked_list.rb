@@ -73,7 +73,7 @@ class LinkedList
   end
 
 
-  def prepend(value)
+  def prepend(valuue)
     temporary_head = @head
     new_nodes = value.split(" ")
     @head = Node.new(new_nodes[0])
