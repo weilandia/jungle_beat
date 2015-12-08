@@ -41,20 +41,27 @@ class LinkedListTest < Minitest::Test
     assert list.all == "node1-->node2-->nil"
   end
 
-  def test_count
+  def test_count_with_append
     list = LinkedList.new("node1 node2")
     assert list.count == 2
     list.append("node3 node4 node5")
     assert list.count == 5
   end
 
+  def test_count_with_prepend
+    list = LinkedList.new("node1 node2")
+    assert list.count == 2
+    list.prepend("node3 node4 node5")
+    assert list.count == 5
+  end
+
   def test_prepend
-    skip
     list = LinkedList.new("node1 node2")
     assert list.head.value == "node1"
     assert list.all == "node1-->node2-->nil"
     list.prepend("node5 node6")
-    assert list.all == "node5-->node6-->node1-->node2-->nil"
+    assert list.prepend("node5 node6") == 2
+    assert list.all == "node5-->node6-->node5-->node6-->node1-->node2-->nil"
   end
 
   def test_include?
@@ -64,8 +71,15 @@ class LinkedListTest < Minitest::Test
     assert list.include?("node3")
   end
 
-  def test_pop
-    skip
+  def test_pop_simple
+    list = LinkedList.new("node1")
+    assert list.pop(1) == nil
+  end
+
+  def test_pop_multi_input_multi_pop
+    list = LinkedList.new("node1 node2 node3 node4")
+    assert list.pop(2) == 2
+    assert list.all == "node1-->node2-->nil"
   end
 
   def test_insert
