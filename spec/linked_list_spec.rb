@@ -1,8 +1,14 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/linked_list'
-require '../lib/node'
+require 'pry'
+require_relative '../lib/node'
+require_relative '../lib/linked_list'
+
+
+# Use mrspec tag:
+ # meta current: true
+ # Call with: mrspec file.rb -t current
 
 class LinkedListTest < Minitest::Test
 

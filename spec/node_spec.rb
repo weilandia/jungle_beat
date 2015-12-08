@@ -1,7 +1,12 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/node'
+require 'pry'
+require_relative '../lib/node'
+
+# Use mrspec tag:
+ # meta current: true
+ # Call with: mrspec file.rb -t current
 
 class NodeTest < Minitest::Test
   def test_create_node

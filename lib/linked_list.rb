@@ -1,8 +1,10 @@
-require '../lib/node'
+require_relative '../lib/node'
+
+
 
 class LinkedList
 
-  attr_accessor :head, :count
+  attr_accessor :head, :count, :tail
   attr_reader :nodes
 
   def initialize(value)
@@ -73,7 +75,7 @@ class LinkedList
   end
 
 
-  def prepend(valuue)
+  def prepend(value)
     temporary_head = @head
     new_nodes = value.split(" ")
     @head = Node.new(new_nodes[0])
