@@ -25,20 +25,20 @@ class LinkedListTest < Minitest::Test
   def test_all_one_value
     list = LinkedList.new("node1")
     assert list.head.value == "node1"
-    assert list.all == "node1-->nil"
+    assert list.all == "node1"
   end
 
   def test_all_multi_value
     list = LinkedList.new("node1 node2 node3 node4")
     assert list.head.value == "node1"
-    assert list.all == "node1-->node2-->node3-->node4-->nil"
+    assert list.all == "node1 node2 node3 node4"
   end
 
   def test_append
     list = LinkedList.new("node1")
     assert list.head.value == "node1"
     list.append("node2")
-    assert list.all == "node1-->node2-->nil"
+    assert list.all == "node1 node2"
   end
 
   def test_count_with_append
@@ -58,10 +58,10 @@ class LinkedListTest < Minitest::Test
   def test_prepend
     list = LinkedList.new("node1 node2")
     assert list.head.value == "node1"
-    assert list.all == "node1-->node2-->nil"
+    assert list.all == "node1 node2"
     list.prepend("node5 node6")
     assert list.prepend("node5 node6") == 2
-    assert list.all == "node5-->node6-->node5-->node6-->node1-->node2-->nil"
+    assert list.all == "node5 node6 node5 node6 node1 node2"
   end
 
   def test_include?
@@ -73,20 +73,23 @@ class LinkedListTest < Minitest::Test
 
   def test_pop_simple
     list = LinkedList.new("node1")
-    assert list.pop(1) == nil
+    assert list.pop(1) == "Your head node, node1, has been destroyed. You no longer have a list."
   end
 
   def test_pop_multi_input_multi_pop
     list = LinkedList.new("node1 node2 node3 node4")
     assert list.pop(2) == 2
-    assert list.all == "node1-->node2-->nil"
+    assert list.all == "node1 node2"
   end
 
   def test_insert
-    skip
+    list = LinkedList.new("node1 node2 node3 node4")
+    list.insert(2,"node5 node6")
+    assert list.all == "node1 node2 node5 node6 node3 node4"
   end
 
   def test_find
-    skip
+    list = LinkedList.new("node1 node2 find1 find2 node3 node4")
+    list.find(2,2) == "find1 find2"
   end
 end
