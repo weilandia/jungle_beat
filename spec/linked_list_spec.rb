@@ -59,6 +59,14 @@ class LinkedListTest < Minitest::Test
       assert list.all == "node5 node6 node5 node6 node1 node2"
     end
 
+    def test_prepend_validation
+      list = LinkedList.new("node1 node2")
+      assert list.head.value == "node1"
+      assert list.all == "node1 node2"
+      assert list.prepend("node5 invalid") == 1
+      assert list.all == "node5 node1 node2"
+    end
+
 
 # Test count
   def test_count_with_append

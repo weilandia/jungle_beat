@@ -64,7 +64,19 @@ class JungleBeatTest < Minitest::Test
   end
 
 
+#EXTENSIONS#
+#1. Validation
+  def append_validate
+    jb = JungleBeat.new("deep")
+    assert jb.append("Mississippi") == 0
+    assert jb.all == "deep"
+  end
 
+  def prepend_validate
+    jb = JungleBeat.new("deep")
+    assert jb.prepend("tee tee tee Mississippi") == 0
+    assert jb.all == "tee tee tee deep"
+  end
 
   def test_change_rate
     jb = JungleBeat.new("deep dep dep deep")

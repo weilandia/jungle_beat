@@ -48,14 +48,6 @@ class LinkedList
 
   def include?(value)
     current_node = @head
-    while current_node.value != value
-      current_node = current_node.next_node
-    end
-    true
-  end
-
-  def include?(value)
-    current_node = @head
     while current_node
       return true if value == current_node.value
       current_node = current_node.next_node
@@ -65,11 +57,10 @@ class LinkedList
 
   def prepend(value)
     temporary_head = @head
-    new_nodes = value.split(" ")
-    @head = Node.new(new_nodes[0])
-    new_nodes = new_nodes[1..-1]
+    validate_and_parse(value)
+    create
     current_node = @head
-    new_nodes.each do |node|
+    @validated_nodes.each do |node|
       while current_node.next_node != nil
         current_node = current_node.next_node
       end
@@ -77,21 +68,20 @@ class LinkedList
       current_node = current_node.next_node
     end
     current_node.next_node = temporary_head
-    count = new_nodes.length + 1
+    count = @validated_nodes.length + 1
     count
   end
 
   def append(value)
-    new_nodes = value.split(" ")
-    count = 0
-    new_nodes.each do |node|
+    validate_and_parse(value)
+    @validated_nodes.each do |node|
       current_node = @head
       while current_node.next_node != nil
         current_node = current_node.next_node
       end
-      count += 1
       current_node.next_node = Node.new(node)
     end
+    count = @validated_nodes.length
     count
   end
 
@@ -201,7 +191,8 @@ class LinkedList
 
   def validate_and_parse(input_string) #utility
     @validated_nodes = []
-    valid_inputs = ["node1","node2","node3","node4","node5","tee", "dee", "deep", "bop", "boop", "la", "na","dep","dop"]
+    input_string = input_string.to_s
+    valid_inputs = ["node1","node2","node3","node4","node5","node6","node7","node8","node9","node10","tee", "dee", "deep", "bop", "boop", "la", "na","dep","dop"]
     input_string.split.each do |input|
       if valid_inputs.include?(input)
         @validated_nodes << input
@@ -223,5 +214,6 @@ class LinkedList
       current_node.next_node = Node.new(node)
     end
   end
+
 
 end
