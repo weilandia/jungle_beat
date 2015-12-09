@@ -57,6 +57,9 @@ class LinkedList
   def prepend(value)
     temporary_head = @head
     validate_and_parse(value)
+    #for edge case prepending only invalid inputs
+    return 0 if @validated_nodes == []
+    #
     create
     link_nodes
     @current_node.next_node = temporary_head

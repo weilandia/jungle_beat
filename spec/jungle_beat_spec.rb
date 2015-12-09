@@ -121,4 +121,30 @@ class JungleBeatTest < Minitest::Test
     assert jb.play == 4
   end
 
+  def test_integrated_base
+    jb = JungleBeat.new("deep dep dep deep")
+    assert jb.play == 4
+    assert jb.append("deep bop bop deep") == 4
+    assert jb.all == "deep dep dep deep deep bop bop deep"
+    assert jb.prepend("tee tee tee tee") == 4
+    assert jb.all == "tee tee tee tee deep dep dep deep deep bop bop deep"
+    assert jb.include?("dep") == true
+    assert jb.pop(4) == "deep bop bop deep"
+    assert jb.all == "tee tee tee tee deep dep dep deep"
+    assert jb.count == 8
+    assert jb.insert(4, "boop bop bop boop") == "tee tee tee tee boop bop bop boop deep dep dep deep"
+    assert jb.find(8, 2) == "deep dep"
+  end
+
+  def test_integrated_validation
+    jb = JungleBeat.new("deep")
+    assert jb.append("Mississippi") == 0
+    assert jb.all == "deep"
+    assert jb.prepend("tee tee tee Mississippi") == 3
+    assert jb.all == "tee tee tee deep"
+    assert jb.append("California New Jersey New York") == 0
+    assert jb.prepend("San Francisco Newark NYC") == 0
+  end
+
+
 end
