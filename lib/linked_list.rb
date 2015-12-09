@@ -2,8 +2,7 @@ require_relative '../lib/node'
 
 class LinkedList
 
-  attr_accessor :head, :count, :tail
-  attr_reader :nodes
+  attr_accessor :head
 
   def initialize(value)
     validate_and_parse(value)
@@ -59,30 +58,17 @@ class LinkedList
     temporary_head = @head
     validate_and_parse(value)
     create
-    current_node = @head
-    @validated_nodes.each do |node|
-      while current_node.next_node != nil
-        current_node = current_node.next_node
-      end
-      current_node.next_node = Node.new(node)
-      current_node = current_node.next_node
-    end
-    current_node.next_node = temporary_head
-    count = @validated_nodes.length + 1
-    count
+    link_nodes
+    @current_node.next_node = temporary_head
+    prepend_count = @validated_nodes.length + 1
+    prepend_count
   end
 
   def append(value)
     validate_and_parse(value)
-    @validated_nodes.each do |node|
-      current_node = @head
-      while current_node.next_node != nil
-        current_node = current_node.next_node
-      end
-      current_node.next_node = Node.new(node)
-    end
-    count = @validated_nodes.length
-    count
+    link_nodes
+    append_count = @validated_nodes.length
+    append_count
   end
 
   def pop(n)
@@ -96,35 +82,31 @@ class LinkedList
     elsif self.count > 1
       popped_nodes = []
       n.times do
-        current_node = @head
-        while current_node.next_node.next_node != nil
-          current_node = current_node.next_node
-        end
-        popped_nodes << current_node.next_node.value
-        current_node.next_node = nil
+        node_step
+        popped_nodes << @current_node.next_node.value
+        @current_node.next_node = nil
       end
       return popped_nodes.reverse.join(" ")
     end
   end
 
   def insert(position,nodes)
-    new_nodes = nodes.split(" ")
+    validate_and_parse(nodes)
     current_node = @head
     count = 1
-    if position > self.count
-      position = self.count
-    end
     if position <= 0
       self.prepend(nodes)
+    elsif position > self.count
+      self.append(nodes)
     else
       while count != position
         current_node = current_node.next_node
         count += 1
       end
       temporary_head_back = current_node.next_node
-      current_node.next_node = Node.new(new_nodes[0])
-      new_nodes = new_nodes[1..-1]
-      new_nodes.each do |node|
+      current_node.next_node = Node.new(@validated_nodes[0])
+      @validated_nodes = @validated_nodes[1..-1]
+      @validated_nodes.each do |node|
         while current_node.next_node != nil
           current_node = current_node.next_node
         end
@@ -203,17 +185,25 @@ class LinkedList
   def create #utility
     @head = Node.new(@validated_nodes[0])
     @validated_nodes = @validated_nodes[1..-1]
+    @current_node = @head
   end
 
   def link_nodes #utility
+    @current_node = @head
     @validated_nodes.each do |node|
-      current_node = @head
-      while current_node.next_node != nil
-        current_node = current_node.next_node
+      while @current_node.next_node != nil
+        @current_node = @current_node.next_node
       end
-      current_node.next_node = Node.new(node)
+      @current_node.next_node = Node.new(node)
+      @current_node = @current_node.next_node
     end
   end
 
+  def node_step
+    @current_node = @head
+    while @current_node.next_node.next_node != nil
+      @current_node = @current_node.next_node
+    end
+  end
 
 end

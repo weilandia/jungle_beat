@@ -39,42 +39,38 @@ class JungleBeatTest < Minitest::Test
     assert jb.include?("dep") == true
   end
 
-  def jb_pop
+  def test_jb_pop
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep deep bop bop deep")
     assert jb.pop(4) == "deep bop bop deep"
-    jb.pop(4)
     assert jb.all == "tee tee tee tee deep dep dep deep"
   end
 
-  def jb_count
+  def test_jb_count
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep")
     assert jb.count == 8
   end
 
-  def jb_insert
+  def test_jb_insert
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep")
     assert jb.insert(4, "boop bop bop boop") == "tee tee tee tee boop bop bop boop deep dep dep deep"
   end
 
-  def jb_find
+  def test_jb_find
     jb = JungleBeat.new("tee tee tee tee boop bop bop boop deep dep dep deep")
     assert jb.find(8,2) == "deep dep"
     jb.find(8,2)
     assert jb.all == "tee tee tee tee boop bop bop boop deep dep dep deep"
   end
 
-
-#EXTENSIONS#
-#1. Validation
-  def append_validate
+  def test_append_validate
     jb = JungleBeat.new("deep")
     assert jb.append("Mississippi") == 0
     assert jb.all == "deep"
   end
 
-  def prepend_validate
+  def test_prepend_validate
     jb = JungleBeat.new("deep")
-    assert jb.prepend("tee tee tee Mississippi") == 0
+    assert jb.prepend("tee tee tee Mississippi") == 3
     assert jb.all == "tee tee tee deep"
   end
 

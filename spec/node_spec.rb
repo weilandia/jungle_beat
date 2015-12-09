@@ -18,6 +18,4 @@ class NodeTest < Minitest::Test
     node1 = Node.new("node1")
     assert node1.next_node == nil
   end
-
-
 end
