@@ -11,13 +11,13 @@ require_relative '../lib/jungle_beat'
  # Call with: mrspec file.rb -t current
 
 class JungleBeatTest < Minitest::Test
-  def test__jungle_beat_new
-    jb = JungleBeat.new("deep dop dop deep")
-    assert jb.all == "deep dop dop deep"
+  def test_jb_new
+    jb = JungleBeat.new("deep dep dep deep")
+    assert jb.all == "deep dep dep deep"
     assert jb.count == 4
   end
 
-  def test_play_normal_rate
+  def test_jb_play_normal_rate
     jb = JungleBeat.new("deep dep dep deep")
     assert jb.play == 4
   end
@@ -62,6 +62,8 @@ class JungleBeatTest < Minitest::Test
     assert jb.all == "tee tee tee tee boop bop bop boop deep dep dep deep"
   end
 
+#Extensions
+##Validation
   def test_append_validate
     jb = JungleBeat.new("deep")
     assert jb.append("Mississippi") == 0
@@ -74,6 +76,7 @@ class JungleBeatTest < Minitest::Test
     assert jb.all == "tee tee tee deep"
   end
 
+##Speed and voice
   def test_change_rate
     jb = JungleBeat.new("deep dep dep deep")
     jb.rate = 100
@@ -85,6 +88,37 @@ class JungleBeatTest < Minitest::Test
     jb.rate = 100
     assert jb.play == 4
     assert jb.rate == 100
+  end
+
+  def test_change_voice
+    jb = JungleBeat.new("deep dep dep deep")
+    jb.voice = "Alice"
+    assert jb.voice == "Alice"
+  end
+
+  def test_play_changed_voice
+    jb = JungleBeat.new("deep dep dep deep")
+    jb.voice = "Alice"
+    assert jb.play == 4
+    assert jb.voice == "Alice"
+  end
+
+  def test_reset_rate_to_default
+    jb = JungleBeat.new("deep dep dep deep")
+    jb.rate = 100
+    assert jb.rate == 100
+    assert jb.reset_rate == 500
+    assert jb.rate == 500
+    assert jb.play == 4
+  end
+
+  def test_reset_voice_to_default
+    jb = JungleBeat.new("deep dep dep deep")
+    jb.voice = "Alice"
+    assert jb.voice == "Alice"
+    assert jb.reset_voice == "Boing"
+    assert jb.voice == "Boing"
+    assert jb.play == 4
   end
 
 end
