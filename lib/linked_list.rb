@@ -1,47 +1,38 @@
 require_relative '../lib/node'
 
-
-
 class LinkedList
 
   attr_accessor :head, :count, :tail
   attr_reader :nodes
 
   def initialize(value)
-    new_nodes = value.split(" ")
-    @head = Node.new(new_nodes[0])
-    new_nodes = new_nodes[1..-1]
-    new_nodes.each do |node|
-      current_node = @head
-      while current_node.next_node != nil
-        current_node = current_node.next_node
-      end
-      current_node.next_node = Node.new(node)
-    end
+    validate_and_parse(value)
+    create
+    link_nodes
   end
 
   def all
-    @nodes = []
+    nodes = []
     current_node = @head
-    @nodes << current_node.value
+    nodes << current_node.value
     while current_node.next_node != nil
       current_node = current_node.next_node
-      @nodes << current_node.value
+      nodes << current_node.value
     end
-    @nodes << current_node.next_node
-    @nodes.join(" ").rstrip
+    nodes << current_node.next_node
+    nodes.join(" ").rstrip
   end
 
   def all_list
-    @nodes = []
+    nodes = []
     current_node = @head
-    @nodes << current_node.value
+    nodes << current_node.value
     while current_node.next_node != nil
       current_node = current_node.next_node
-      @nodes << current_node.value
+      nodes << current_node.value
     end
-    @nodes << current_node.next_node
-    @nodes.join("-->") + "nil"
+    nodes << current_node.next_node
+    nodes.join("-->") + "nil"
   end
 
   def count
@@ -202,6 +193,34 @@ class LinkedList
       @head = head
       self.append(popped_nodes.join(" "))
       found
+    end
+  end
+
+
+# _____UTILITY METHODS_____
+
+  def validate_and_parse(input_string) #utility
+    @validated_nodes = []
+    valid_inputs = ["node1","node2","node3","node4","node5","tee", "dee", "deep", "bop", "boop", "la", "na","dep","dop"]
+    input_string.split.each do |input|
+      if valid_inputs.include?(input)
+        @validated_nodes << input
+      end
+    end
+  end
+
+  def create #utility
+    @head = Node.new(@validated_nodes[0])
+    @validated_nodes = @validated_nodes[1..-1]
+  end
+
+  def link_nodes #utility
+    @validated_nodes.each do |node|
+      current_node = @head
+      while current_node.next_node != nil
+        current_node = current_node.next_node
+      end
+      current_node.next_node = Node.new(node)
     end
   end
 

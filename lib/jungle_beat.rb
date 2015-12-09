@@ -3,8 +3,17 @@ require_relative '../lib/node'
 
 class JungleBeat < LinkedList
 
+  attr_accessor :rate
+
+  def initialize(value)
+    validate_and_parse(value)
+    create
+    link_nodes
+    @rate = 500
+  end
+
   def play
-    `say -r 100 -v Boing #{self.all}`
+    `say -r #{@rate} -v Boing #{self.all}`
     self.count
   end
 end
