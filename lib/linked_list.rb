@@ -105,18 +105,24 @@ class LinkedList
   end
 
   def pop(n)
+    if n <= 0
+      return
+    end
     if self.count <= n
       message = "Your head node, #{@head.value}, has been destroyed. You no longer have a list."
       @head = nil
       message
     elsif self.count > 1
+      popped_nodes = []
       n.times do
         current_node = @head
         while current_node.next_node.next_node != nil
           current_node = current_node.next_node
         end
+        popped_nodes << current_node.next_node.value
         current_node.next_node = nil
       end
+      return popped_nodes.reverse.join(" ")
     end
   end
 
@@ -124,7 +130,10 @@ class LinkedList
     new_nodes = nodes.split(" ")
     current_node = @head
     count = 1
-    if position == 0
+    if position > self.count
+      position = self.count
+    end
+    if position <= 0
       self.prepend(nodes)
     else
       while count != position

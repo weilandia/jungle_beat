@@ -12,10 +12,13 @@ require_relative '../lib/jungle_beat'
 
 class JungleBeatTest < Minitest::Test
   def test_create_jungle_beat
-    skip
+    jb = JungleBeat.new("deep dep dep deep")
+    assert jb.all == "deep dep dep deep"
+    assert jb.count == 4
   end
 
   def test_play
-    skip
+    jb = JungleBeat.new("deep dep dep deep")
+    assert jb.play == 4
   end
 end
