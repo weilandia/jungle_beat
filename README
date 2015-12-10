@@ -1,3 +1,9 @@
+ReadMe
+JungleBeat is the second project of Module 1
+
+_____
+Design:
+
 1. What I want and why:
   -Create a "JungleBeat" that is made of individual beats ("Nodes")
     -"JungleBeat" should behave like a Linked List
@@ -16,4 +22,3 @@
 
     -The Linked List will be made up of Nodes.
     -Nodes should be made up of a piece of data and a next_node pointer.
-    

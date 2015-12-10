@@ -10,10 +10,7 @@ require_relative '../lib/linked_list'
  # meta current: true
  # Call with: mrspec file.rb -t current
 # Recursion example:
-# def factorial(n)
-  # return 1 if n == 1
-  # return factorial(n-1) * n
-# end
+
 
 class LinkedListTest < Minitest::Test
 # Test initialize

@@ -10,7 +10,7 @@ class LinkedList
     link_nodes
   end
 
-  def all
+  def all(delimiter=" ")
     nodes = []
     current_node = @head
     nodes << current_node.value
@@ -18,26 +18,13 @@ class LinkedList
       current_node = current_node.next_node
       nodes << current_node.value
     end
-    nodes << current_node.next_node
-    nodes.join(" ").rstrip
-  end
-
-  def all_list
-    nodes = []
-    current_node = @head
-    nodes << current_node.value
-    while current_node.next_node != nil
-      current_node = current_node.next_node
-      nodes << current_node.value
-    end
-    nodes << current_node.next_node
-    nodes.join("-->") + "nil"
+    nodes << "nil" if delimiter == "-->"
+    nodes.join(delimiter).rstrip
   end
 
   def count
-    @count = 0
     current_node = @head
-    @count += 1
+    @count = 1
     while current_node.next_node != nil
       @count += 1
       current_node = current_node.next_node
@@ -177,7 +164,7 @@ class LinkedList
   def validate_and_parse(input_string) #utility
     @validated_nodes = []
     input_string = input_string.to_s
-    valid_inputs = ["node1","node2","node3","node4","node5","node6","node7","node8","node9","node10","tee", "dee", "deep", "bop", "boop", "la", "na","dep","dop"]
+    valid_inputs = ["node1","node2","node3","node4","node5","node6","node7","node8","node9","node10","tee", "dee", "deep", "bop", "boop", "la", "na","dep","dop","find1","find2"]
     input_string.split.each do |input|
       if valid_inputs.include?(input)
         @validated_nodes << input
