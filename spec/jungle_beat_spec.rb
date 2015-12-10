@@ -146,5 +146,74 @@ class JungleBeatTest < Minitest::Test
     assert jb.prepend("San Francisco Newark NYC") == 0
   end
 
+  def test_integrated_speed_and_voice
+    jb = JungleBeat.new("deep dop dop deep")
+    assert (jb.rate = 100) == 100
+    assert (jb.voice = "Alice") == "Alice"
+    assert jb.play == 4
+    assert jb.reset_rate == 500
+    assert jb.rate == 500
+    assert jb.reset_voice == "Boing"
+    assert jb.voice == "Boing"
+    assert jb.play == 4
+  end
 
+  def test_voices
+    jb = JungleBeat.new("bop")
+    jb.rate = 200
+    jb.play
+    assert (jb.voice = "Alice") == "Alice"
+    jb.play
+    assert (jb.voice = "Agnes") == "Agnes"
+    jb.play
+    assert (jb.voice = "Kathy") == "Kathy"
+    jb.play
+    assert (jb.voice = "Princess") == "Princess"
+    jb.play
+    assert (jb.voice = "Victoria") == "Victoria"
+    jb.play
+    assert (jb.voice = "Alex") == "Alex"
+    jb.play
+    assert (jb.voice = "Bruce") == "Bruce"
+    jb.play
+    assert (jb.voice = "Fred") == "Fred"
+    jb.play
+    assert (jb.voice = "Junior") == "Junior"
+    jb.play
+    assert (jb.voice = "Ralph") == "Ralph"
+    jb.play
+    assert (jb.voice = "Albert") == "Albert"
+    jb.play
+    assert (jb.voice = "Bad News") == "Bad News"
+    jb.play
+    assert (jb.voice = "Bahh") == "Bahh"
+    jb.play
+    assert (jb.voice = "Bells") == "Bells"
+    jb.play
+    assert (jb.voice = "Bubbles") == "Bubbles"
+    jb.play
+    assert (jb.voice = "Cellos") == "Cellos"
+    jb.play
+    assert (jb.voice = "Deranged") == "Deranged"
+    jb.play
+    assert (jb.voice = "Good News") == "Good News"
+    jb.play
+    assert (jb.voice = "Hysterical") == "Hysterical"
+    jb.play
+    assert (jb.voice = "Pipe Organ") == "Pipe Organ"
+    jb.play
+    assert (jb.voice = "Trinoids") == "Trinoids"
+    jb.play
+    assert (jb.voice = "Whisper") == "Whisper"
+    jb.play
+    assert (jb.voice = "Zarvox") == "Zarvox"
+    jb.play
+  end
+
+  def test_good_news
+    jb = JungleBeat.new("dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop")
+    assert (jb.rate = 150) == 150
+    assert (jb.voice = "Good News") == "Good News"
+    jb.play
+  end
 end
