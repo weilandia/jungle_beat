@@ -129,8 +129,8 @@ class LinkedList
     elsif position > self.count
       message = "There are no nodes starting at postion #{position}. The tail of the list is at position #{self.count}."
       message
-    elsif position <= 0
-      message = "Positions in this list start at 1. Please enter a valid position"
+    elsif position < 0
+      message = "Positions in this list start at 0. Please enter a valid position"
     # end edge cases
     else
       while position_count != position
