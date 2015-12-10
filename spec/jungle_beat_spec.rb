@@ -13,7 +13,6 @@ require_relative '../lib/jungle_beat'
 class JungleBeatTest < Minitest::Test
   def test_jb_new
     jb = JungleBeat.new("deep dep dep deep")
-    binding.pry
     assert jb.all == "deep dep dep deep"
     assert jb.count == 4
   end
