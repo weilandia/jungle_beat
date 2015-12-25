@@ -11,209 +11,153 @@ require_relative '../lib/jungle_beat'
  # Call with: mrspec file.rb -t current
 
 class JungleBeatTest < Minitest::Test
+  def setup
+    @input = "deep dep dep deep"
+  end
+
   def test_jb_new
-    jb = JungleBeat.new("deep dep dep deep")
-    assert jb.all == "deep dep dep deep"
-    assert jb.count == 4
+    jb = JungleBeat.new(@input)
+    assert_equal "deep dep dep deep", jb.all
+    assert_equal 4, jb.count
   end
 
   def test_jb_play_normal_rate
-    jb = JungleBeat.new("deep dep dep deep")
-    assert jb.play == 4
+    jb = JungleBeat.new(@input)
+    assert_equal 4, jb.play
   end
 
   def test_jb_append
-    jb = JungleBeat.new("deep dep dep deep")
-    assert jb.append("deep bop bop deep") == 4
-    assert jb.all == "deep dep dep deep deep bop bop deep"
+    jb = JungleBeat.new(@input)
+    assert_equal 4, jb.append("deep bop bop deep")
+    assert_equal "deep dep dep deep deep bop bop deep", jb.all
   end
 
   def test_jb_prepend
     jb = JungleBeat.new("deep dep dep deep deep bop bop deep")
-    assert jb.prepend("tee tee tee tee") == 4
-    assert jb.all == "tee tee tee tee deep dep dep deep deep bop bop deep"
+    assert_equal 4, jb.prepend("tee tee tee tee")
+    assert_equal "tee tee tee tee deep dep dep deep deep bop bop deep", jb.all
   end
 
   def test_jb_include
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep deep bop bop deep")
-    assert jb.include?("dep") == true
+    assert_equal true, jb.include?("dep")
   end
 
   def test_jb_pop
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep deep bop bop deep")
-    assert jb.pop(4) == "deep bop bop deep"
-    assert jb.all == "tee tee tee tee deep dep dep deep"
+    assert_equal "deep bop bop deep", jb.pop(4)
+    assert_equal "tee tee tee tee deep dep dep deep", jb.all
   end
 
   def test_jb_count
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep")
-    assert jb.count == 8
+    assert_equal 8, jb.count
   end
 
   def test_jb_insert
     jb = JungleBeat.new("tee tee tee tee deep dep dep deep")
-    assert jb.insert(4, "boop bop bop boop") == "tee tee tee tee boop bop bop boop deep dep dep deep"
+    assert_equal "tee tee tee tee boop bop bop boop deep dep dep deep", jb.insert(4, "boop bop bop boop")
   end
 
   def test_jb_find
     jb = JungleBeat.new("tee tee tee tee boop bop bop boop deep dep dep deep")
-    assert jb.find(8,2) == "deep dep"
-    jb.find(8,2)
-    assert jb.all == "tee tee tee tee boop bop bop boop deep dep dep deep"
+    assert_equal "deep dep", jb.find(8,2)
+    assert_equal "tee tee tee tee boop bop bop boop deep dep dep deep", jb.all
   end
 
 #Extensions
 ##Validation
   def test_append_validate
     jb = JungleBeat.new("deep")
-    assert jb.append("Mississippi") == 0
-    assert jb.all == "deep"
+    assert_equal 0, jb.append("Mississippi")
+    assert_equal "deep", jb.all
   end
 
   def test_prepend_validate
     jb = JungleBeat.new("deep")
-    assert jb.prepend("tee tee tee Mississippi") == 3
-    assert jb.all == "tee tee tee deep"
+    assert_equal 3, jb.prepend("tee tee tee Mississippi")
+    assert_equal "tee tee tee deep", jb.all
   end
 
 ##Speed and voice
   def test_change_rate
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.rate = 100
-    assert jb.rate == 100
+    assert_equal 100, jb.rate
   end
 
   def test_play_changed_rate
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.rate = 100
-    assert jb.play == 4
-    assert jb.rate == 100
+    assert_equal 4, jb.play
+    assert_equal 100, jb.rate
   end
 
   def test_change_voice
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.voice = "Alice"
-    assert jb.voice == "Alice"
+    assert_equal "Alice", jb.voice
   end
 
   def test_play_changed_voice
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.voice = "Alice"
-    assert jb.play == 4
-    assert jb.voice == "Alice"
+    assert_equal 4, jb.play
+    assert_equal "Alice", jb.voice
   end
 
   def test_reset_rate_to_default
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.rate = 100
-    assert jb.rate == 100
-    assert jb.reset_rate == 500
-    assert jb.rate == 500
-    assert jb.play == 4
+    assert_equal 100, jb.rate
+    assert_equal 500, jb.reset_rate
+    assert_equal 500, jb.rate
+    assert_equal 4, jb.play
   end
 
   def test_reset_voice_to_default
-    jb = JungleBeat.new("deep dep dep deep")
+    jb = JungleBeat.new(@input)
     jb.voice = "Alice"
-    assert jb.voice == "Alice"
-    assert jb.reset_voice == "Boing"
-    assert jb.voice == "Boing"
-    assert jb.play == 4
+    assert_equal "Alice", jb.voice
+    assert_equal "Boing", jb.reset_voice
+    assert_equal "Boing", jb.voice
+    assert_equal 4, jb.play
   end
 
   def test_integrated_base
-    jb = JungleBeat.new("deep dep dep deep")
-    assert jb.play == 4
-    assert jb.append("deep bop bop deep") == 4
-    assert jb.all == "deep dep dep deep deep bop bop deep"
-    assert jb.prepend("tee tee tee tee") == 4
-    assert jb.all == "tee tee tee tee deep dep dep deep deep bop bop deep"
-    assert jb.include?("dep") == true
-    assert jb.pop(4) == "deep bop bop deep"
-    assert jb.all == "tee tee tee tee deep dep dep deep"
-    assert jb.count == 8
-    assert jb.insert(4, "boop bop bop boop") == "tee tee tee tee boop bop bop boop deep dep dep deep"
-    assert jb.find(8, 2) == "deep dep"
+    jb = JungleBeat.new(@input)
+    assert_equal 4, jb.play
+    assert_equal 4, jb.append("deep bop bop deep")
+    assert_equal "deep dep dep deep deep bop bop deep", jb.all
+    assert_equal 4, jb.prepend("tee tee tee tee")
+    assert_equal "tee tee tee tee deep dep dep deep deep bop bop deep", jb.all
+    assert_equal true, jb.include?("dep")
+    assert_equal "deep bop bop deep", jb.pop(4)
+    assert_equal "tee tee tee tee deep dep dep deep", jb.all
+    assert_equal 8, jb.count
+    assert_equal "tee tee tee tee boop bop bop boop deep dep dep deep", jb.insert(4, "boop bop bop boop")
+    assert_equal "deep dep", jb.find(8, 2)
   end
 
   def test_integrated_validation
     jb = JungleBeat.new("deep")
-    assert jb.append("Mississippi") == 0
-    assert jb.all == "deep"
-    assert jb.prepend("tee tee tee Mississippi") == 3
-    assert jb.all == "tee tee tee deep"
-    assert jb.append("California New Jersey New York") == 0
-    assert jb.prepend("San Francisco Newark NYC") == 0
+    assert_equal 0,  jb.append("Mississippi")
+    assert_equal "deep", jb.all
+    assert_equal 3, jb.prepend("tee tee tee Mississippi")
+    assert_equal "tee tee tee deep", jb.all
+    assert_equal 0, jb.append("California New Jersey New York")
+    assert_equal 0, jb.prepend("San Francisco Newark NYC")
   end
 
   def test_integrated_speed_and_voice
     jb = JungleBeat.new("deep dop dop deep")
-    assert (jb.rate = 100) == 100
-    assert (jb.voice = "Alice") == "Alice"
-    assert jb.play == 4
-    assert jb.reset_rate == 500
-    assert jb.rate == 500
-    assert jb.reset_voice == "Boing"
-    assert jb.voice == "Boing"
-    assert jb.play == 4
+    assert_equal 100, (jb.rate = 100)
+    assert_equal "Alice", (jb.voice = "Alice")
+    assert_equal 4, jb.play
+    assert_equal 500, jb.reset_rate
+    assert_equal 500, jb.rate
+    assert_equal "Boing", jb.reset_voice
+    assert_equal "Boing", jb.voice
+    assert_equal 4, jb.play
   end
-
-  # def test_voices
-  #   jb = JungleBeat.new("bop")
-  #   jb.rate = 200
-  #   jb.play
-  #   assert (jb.voice = "Alice") == "Alice"
-  #   jb.play
-  #   assert (jb.voice = "Agnes") == "Agnes"
-  #   jb.play
-  #   assert (jb.voice = "Kathy") == "Kathy"
-  #   jb.play
-  #   assert (jb.voice = "Princess") == "Princess"
-  #   jb.play
-  #   assert (jb.voice = "Victoria") == "Victoria"
-  #   jb.play
-  #   assert (jb.voice = "Alex") == "Alex"
-  #   jb.play
-  #   assert (jb.voice = "Bruce") == "Bruce"
-  #   jb.play
-  #   assert (jb.voice = "Fred") == "Fred"
-  #   jb.play
-  #   assert (jb.voice = "Junior") == "Junior"
-  #   jb.play
-  #   assert (jb.voice = "Ralph") == "Ralph"
-  #   jb.play
-  #   assert (jb.voice = "Albert") == "Albert"
-  #   jb.play
-  #   assert (jb.voice = "Bad News") == "Bad News"
-  #   jb.play
-  #   assert (jb.voice = "Bahh") == "Bahh"
-  #   jb.play
-  #   assert (jb.voice = "Bells") == "Bells"
-  #   jb.play
-  #   assert (jb.voice = "Bubbles") == "Bubbles"
-  #   jb.play
-  #   assert (jb.voice = "Cellos") == "Cellos"
-  #   jb.play
-  #   assert (jb.voice = "Deranged") == "Deranged"
-  #   jb.play
-  #   assert (jb.voice = "Good News") == "Good News"
-  #   jb.play
-  #   assert (jb.voice = "Hysterical") == "Hysterical"
-  #   jb.play
-  #   assert (jb.voice = "Pipe Organ") == "Pipe Organ"
-  #   jb.play
-  #   assert (jb.voice = "Trinoids") == "Trinoids"
-  #   jb.play
-  #   assert (jb.voice = "Whisper") == "Whisper"
-  #   jb.play
-  #   assert (jb.voice = "Zarvox") == "Zarvox"
-  #   jb.play
-  # end
-  #
-  # def test_good_news
-  #   jb = JungleBeat.new("dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop dop")
-  #   assert (jb.rate = 150) == 150
-  #   assert (jb.voice = "Good News") == "Good News"
-  #   jb.play
-  # end
 end

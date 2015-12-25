@@ -1,24 +1,6 @@
-ReadMe
-JungleBeat is the second project of Module 1
+JungleBeat
+=======
 
-_____
-Design:
+###Explanation
 
-1. What I want and why:
-  -Create a "JungleBeat" that is made of individual beats ("Nodes")
-    -"JungleBeat" should behave like a Linked List
-    -"JungleBeat" should accept a String of beats and     convert them into individual nodes
-    -"JungleBeat" should be able to change based on new nodes being added or nodes being removed
-
-  -The "JungleBeat" will be a Linked List
-    -We should be able to (append) the Linked List by putting new beats (Nodes) at the end of the list
-    -We should be able to print all beats to the screen (all)
-    -We should be able to (prepend) the Linked List by putting new beats at the beginning of the list
-    -We should be able to identify if particular beats are part of our Linked List (include?)
-    -We should be able to remove (pop(n)) a specified number of beats off the end of our Linked List
-    -We should be able to count all the beats in our Linked List
-    -We should be able to insert (insert(location, string)) a String of beats into our Linked List at a specified location
-    -We should be able to find (find(location, number of beats)) what beat is at a specific location in our Linked List.  We should also be able to specify how many beats to find, starting with the given location.
-
-    -The Linked List will be made up of Nodes.
-    -Nodes should be made up of a piece of data and a next_node pointer.
+JungleBeat is project intended to explore linked lists as a data structure in Ruby. The core of the project is a collection of methods that allow for the manipulation of a singly linked list, without the use of Ruby's Array class.  To make the project a little more exciting, the linked list is used in the JungleBeat class to power a drum machine.
